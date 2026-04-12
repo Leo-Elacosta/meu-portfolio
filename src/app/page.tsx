@@ -27,7 +27,7 @@ const dictionaries = {
     liveBtn: "Live Demo →",
     loading: "Carregando projetos...",
     empty: "Nenhum projeto encontrado.",
-    switchLang: "🇺🇸 English",
+    switchLang: "🇧🇷 Português ",
   },
   en: {
     heroTitle: "Hello, I'm Leandro Lima 👋",
@@ -38,7 +38,7 @@ const dictionaries = {
     liveBtn: "Live Demo →",
     loading: "Loading projects...",
     empty: "No projects found.",
-    switchLang: "🇧🇷 Português",
+    switchLang: "🇺🇸 English",
   },
 };
 
@@ -78,7 +78,7 @@ export default function Home() {
           Acesso Admin
         </Link>
         <button
-          onClick={() => setLanguage(language === "en" ? "en" : "pt")}
+          onClick={() => setLanguage(language === "pt" ? "en" : "pt")}
           className="px-4 py-2 bg-zinc-800 text-white rounded-lg hover:bg-zinc-700 transition-colors text-sm font-medium"
         >
           {t.switchLang}
