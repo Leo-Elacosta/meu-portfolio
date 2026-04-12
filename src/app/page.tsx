@@ -60,7 +60,8 @@ export default function Home() {
           onClick={toggleLanguage}
           className="px-4 py-2 border border-zinc-700 rounded-full hover:bg-zinc-800 transition-colors text-sm font-medium"
         >
-          {language === "en" ? "PT-BR" : "EN-US"}
+          {/* Agora o botão diz claramente a ação e o idioma alvo */}
+          {language === "pt" ? "🇧🇷 PT" : "🇺🇸 EN"}
         </button>
       </div>
 
@@ -133,9 +134,12 @@ export default function Home() {
                     <Link href={project.github_url} target="_blank" className="hover:text-gray-300 transition-colors">
                       GitHub →
                     </Link>
-                    <Link href={project.live_url} target="_blank" className="hover:text-gray-300 transition-colors">
-                      Live Demo →
-                    </Link>
+                    {/* Renderiza o link 'Live' apenas se a variável não estiver vazia ou nula */}
+                    {project.live_url && (
+                      <Link href={project.live_url} target="_blank" className="hover:text-gray-300 transition-colors">
+                        Live Demo →
+                      </Link>
+                    )}
                   </div>
                 </div>
               </motion.div>

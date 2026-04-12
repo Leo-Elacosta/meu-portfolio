@@ -1,14 +1,14 @@
 // src/locales/pt.ts
 export const pt = {
   hero: {
-    greeting: "Olá, eu sou um",
-    role: "Desenvolvedor Fullstack",
-    description: "Apaixonado por criar soluções web modernas e eficientes. Aqui você encontra um pouco do meu trabalho, transformando ideias em código através de React, Next.js e muito mais.",
+    greeting: "Olá, eu construo",
+    role: "Experiências Digitais",
+    description: "Crio sites rápidos, bonitos e fáceis de usar que ajudam o seu negócio a crescer e se conectar com o seu público. Vamos transformar as suas ideias em realidade.",
     linkedin: "LinkedIn",
     github: "GitHub",
   },
   projects: {
-    title: "Meus Projetos",
+    title: "Meu Trabalho",
     placeholder: "[ A grade de projetos vinda do Supabase aparecerá aqui ]",
   },
 };
