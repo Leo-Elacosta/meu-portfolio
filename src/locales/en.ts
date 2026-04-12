@@ -1,9 +1,9 @@
 // src/locales/en.ts
 export const en = {
   hero: {
-    greeting: "Hi, I build",
+    greeting: "Hello, i'm Leandro Lima and I build",
     role: "Digital Experiences",
-    description: "I create fast, beautiful, and easy-to-use websites that help your business grow and connect with your audience. Let's turn your ideas into reality.",
+    description: "I'm a Web Developer passionate about building modern and efficient solutions. My focus is turning complex ideas into simple, elegant interfaces with high-quality code. Welcome to my digital portfolio!",
     linkedin: "LinkedIn",
     github: "GitHub",
   },

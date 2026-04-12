@@ -1,9 +1,9 @@
 // src/locales/pt.ts
 export const pt = {
   hero: {
-    greeting: "Olá, eu construo",
+    greeting: "Olá, me chamo Leandro Lima e eu construo",
     role: "Experiências Digitais",
-    description: "Crio sites rápidos, bonitos e fáceis de usar que ajudam o seu negócio a crescer e se conectar com o seu público. Vamos transformar as suas ideias em realidade.",
+    description: "Sou um Desenvolvedor Web apaixonado por criar soluções modernas e eficientes. Meu foco é transformar ideias complexas em interfaces simples, elegantes e com código de alta qualidade. Bem-vindo(a) ao meu portfólio digital!",
     linkedin: "LinkedIn",
     github: "GitHub",
   },

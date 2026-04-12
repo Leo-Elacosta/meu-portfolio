@@ -1,13 +1,10 @@
-// src/app/page.tsx
-"use client"; 
+"use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { useLanguage } from "@/context/LanguageContext";
+import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
+import Link from "next/link";
 
-// Defining the shape of our Project data coming from Supabase
+// 1. Tipagem do Projeto
 interface Project {
   id: string;
   title_en: string;
@@ -19,135 +16,152 @@ interface Project {
   live_url: string;
 }
 
-export default function Home() {
-  const { t, language, toggleLanguage } = useLanguage();
-  
-  // State to store the projects and loading status
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+// 2. Dicionário de Traduções (Substitua pelos seus arquivos reais, se preferir)
+const dictionaries = {
+  pt: {
+    heroTitle: "Olá, me chamo Leandro Lima 👋",
+    heroDescription: "Sou um Desenvolvedor apaixonado por criar soluções modernas e eficientes. Meu foco é transformar ideias complexas em interfaces simples, elegantes e com código de alta qualidade. Bem-vindo ao meu portfólio digital!",
+    linkedinBtn: "Conectar no LinkedIn",
+    projectsTitle: "Meus Projetos",
+    githubBtn: "GitHub →",
+    liveBtn: "Live Demo →",
+    loading: "Carregando projetos...",
+    empty: "Nenhum projeto encontrado.",
+    switchLang: "🇺🇸 English",
+  },
+  en: {
+    heroTitle: "Hello, I'm Leandro Lima 👋",
+    heroDescription: "I'm a Developer passionate about building modern and efficient solutions. My focus is turning complex ideas into simple, elegant interfaces with high-quality code. Welcome to my digital portfolio!",
+    linkedinBtn: "Connect on LinkedIn",
+    projectsTitle: "My Projects",
+    githubBtn: "GitHub →",
+    liveBtn: "Live Demo →",
+    loading: "Loading projects...",
+    empty: "No projects found.",
+    switchLang: "🇧🇷 Português",
+  },
+};
 
-  // Fetch projects when the component mounts
+export default function Home() {
+  // === ESTADOS (Memória) ===
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [language, setLanguage] = useState<"pt" | "en">("pt");
+
+  // === BUSCA DE DADOS ===
   useEffect(() => {
     async function fetchProjects() {
-      try {
-        // Fetching all data from the 'projects' table
-        const { data, error } = await supabase
-          .from("projects")
-          .select("*")
-          .order("created_at", { ascending: false });
+      const { data, error } = await supabase
+        .from("projects")
+        .select("*")
+        .order("created_at", { ascending: false });
 
-        if (error) throw error;
-        
-        if (data) {
-          setProjects(data);
-        }
-      } catch (error) {
-        console.error("Error fetching projects:", error);
-      } finally {
-        setIsLoading(false); // Stop loading regardless of success or error
+      if (!error && data) {
+        setProjects(data);
       }
+      setLoading(false);
     }
 
     fetchProjects();
-  }, []); // The empty array means this runs only once when the page loads
+  }, []);
 
+  // Seleciona as traduções atuais com base no estado 'language'
+  const t = dictionaries[language];
+
+  // === RENDERIZAÇÃO ===
   return (
-    <main className="flex flex-col items-center min-h-screen p-8 md:p-24 max-w-6xl mx-auto relative">
+    <main className="min-h-screen p-8 md:p-16 max-w-5xl mx-auto">
       
-      {/* Language Toggle */}
-      <div className="absolute top-8 right-8">
-        <button 
-          onClick={toggleLanguage}
-          className="px-4 py-2 border border-zinc-700 rounded-full hover:bg-zinc-800 transition-colors text-sm font-medium"
+      {/* Cabeçalho: Botões de Admin e Troca de Idioma */}
+      <div className="flex justify-end gap-6 items-center mb-8">
+        <Link href="/admin" className="text-zinc-500 hover:text-white transition-colors text-sm font-medium">
+          Acesso Admin
+        </Link>
+        <button
+          onClick={() => setLanguage(language === "pt" ? "en" : "pt")}
+          className="px-4 py-2 bg-zinc-800 text-white rounded-lg hover:bg-zinc-700 transition-colors text-sm font-medium"
         >
-          {/* Agora o botão diz claramente a ação e o idioma alvo */}
-          {language === "pt" ? "🇧🇷 PT" : "🇺🇸 EN"}
+          {t.switchLang}
         </button>
       </div>
 
-      {/* Hero Section */}
-      <motion.section 
-        initial={{ opacity: 0, y: 20 }} 
-        animate={{ opacity: 1, y: 0 }} 
-        transition={{ duration: 0.8 }}
-        className="text-center space-y-6 mt-16 md:mt-0"
-      >
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-          {t.hero.greeting} <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-500">{t.hero.role}</span>
+      {/* Área de Apresentação (Hero) */}
+      <div className="mb-16 mt-12">
+        <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white tracking-tight">
+          {t.heroTitle}
         </h1>
-        
-        <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
-          {t.hero.description}
+        <p className="text-lg md:text-xl text-zinc-400 max-w-2xl leading-relaxed">
+          {t.heroDescription}
         </p>
-
-        <div className="flex gap-4 justify-center mt-8">
-          <Link href="https://www.linkedin.com/in/leandrolimaandrade/" target="_blank" className="px-6 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-full transition-colors font-medium">
-            {t.hero.linkedin}
-          </Link>
-          <Link href="https://github.com/Leo-Elacosta" target="_blank" className="px-6 py-3 bg-white text-black hover:bg-gray-200 rounded-full transition-colors font-medium">
-            {t.hero.github}
+        
+        {/* === BOTÃO DO LINKEDIN ADICIONADO AQUI === */}
+        <div className="mt-8 flex gap-4">
+          <Link 
+            href="https://www.linkedin.com/in/leandrolimaandrade/" 
+            target="_blank" 
+            className="px-6 py-3 bg-[#0A66C2] hover:bg-[#004182] text-white font-medium rounded-lg transition-colors flex items-center gap-2"
+          >
+            {t.linkedinBtn}
           </Link>
         </div>
-      </motion.section>
+      </div>
 
-      {/* Projects Section */}
-      <motion.section 
-        initial={{ opacity: 0 }} 
-        animate={{ opacity: 1 }} 
-        transition={{ duration: 1, delay: 0.5 }}
-        className="mt-32 w-full"
-      >
-        <h2 className="text-3xl font-semibold mb-12 border-b border-zinc-700 pb-4">
-          {t.projects.title}
-        </h2>
+      {/* Seção de Projetos */}
+      <h2 className="text-2xl font-bold mb-8 border-b border-zinc-800 pb-4">
+        {t.projectsTitle}
+      </h2>
 
-        {isLoading ? (
-          <div className="text-center text-zinc-500 animate-pulse">Loading projects...</div>
-        ) : (
-          /* CSS Grid for responsive cards */
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project) => (
-              <motion.div 
-                key={project.id}
-                whileHover={{ y: -5 }} // Slight lift effect on hover
-                className="bg-zinc-900/50 border border-zinc-800 rounded-2xl overflow-hidden flex flex-col"
-              >
-                {/* Project Image Placeholder */}
-                <div className="h-48 bg-zinc-800 w-full relative">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={project.image_url} alt="Project" className="object-cover w-full h-full opacity-80" />
-                </div>
+      {/* Lógica de Carregamento e Lista Vazia */}
+      {loading ? (
+        <p className="text-zinc-500">{t.loading}</p>
+      ) : projects.length === 0 ? (
+        <p className="text-zinc-500">{t.empty}</p>
+      ) : (
+        // Grid de Cards dos Projetos
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {projects.map((project) => (
+            <div key={project.id} className="bg-zinc-900/50 rounded-2xl border border-zinc-800 overflow-hidden flex flex-col group">
+              
+              {/* Imagem do Projeto */}
+              <div className="h-48 bg-zinc-800 w-full relative overflow-hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={project.image_url}
+                  alt="Snapshot do Projeto"
+                  className="object-cover w-full h-full opacity-80 transition-all duration-300 group-hover:opacity-100 group-hover:scale-105"
+                />
+              </div>
+
+              {/* Informações do Projeto */}
+              <div className="p-6 flex flex-col flex-grow">
+                {/* Título Dinâmico */}
+                <h3 className="text-xl font-bold mb-2 text-white">
+                  {language === "pt" ? project.title_pt : project.title_en}
+                </h3>
                 
-                {/* Project Info */}
-                <div className="p-6 flex flex-col flex-grow">
-                  <h3 className="text-xl font-bold mb-2">
-                    {/* Choose title based on active language */}
-                    {language === "en" ? project.title_en : project.title_pt}
-                  </h3>
-                  <p className="text-zinc-400 text-sm flex-grow mb-6">
-                    {/* Choose description based on active language */}
-                    {language === "en" ? project.description_en : project.description_pt}
-                  </p>
-                  
-                  {/* Links */}
-                  <div className="flex gap-4 text-sm font-medium">
-                    <Link href={project.github_url} target="_blank" className="hover:text-gray-300 transition-colors">
-                      GitHub →
-                    </Link>
-                    {/* Renderiza o link 'Live' apenas se a variável não estiver vazia ou nula */}
-                    {project.live_url && (
-                      <Link href={project.live_url} target="_blank" className="hover:text-gray-300 transition-colors">
-                        Live Demo →
-                      </Link>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        )}
-      </motion.section>
+                {/* Descrição Dinâmica */}
+                <p className="text-zinc-400 text-sm mb-6 flex-grow">
+                  {language === "pt" ? project.description_pt : project.description_en}
+                </p>
 
+                {/* Links */}
+                <div className="flex gap-4 text-sm font-medium mt-auto">
+                  <Link href={project.github_url} target="_blank" className="text-white hover:text-gray-300 transition-colors">
+                    {t.githubBtn}
+                  </Link>
+                  
+                  {project.live_url && (
+                    <Link href={project.live_url} target="_blank" className="text-zinc-400 hover:text-white transition-colors">
+                      {t.liveBtn}
+                    </Link>
+                  )}
+                </div>
+              </div>
+              
+            </div>
+          ))}
+        </div>
+      )}
     </main>
   );
 }
