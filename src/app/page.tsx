@@ -78,7 +78,7 @@ export default function Home() {
           Acesso Admin
         </Link>
         <button
-          onClick={() => setLanguage(language === "pt" ? "en" : "pt")}
+          onClick={() => setLanguage(language === "en" ? "en" : "pt")}
           className="px-4 py-2 bg-zinc-800 text-white rounded-lg hover:bg-zinc-700 transition-colors text-sm font-medium"
         >
           {t.switchLang}
