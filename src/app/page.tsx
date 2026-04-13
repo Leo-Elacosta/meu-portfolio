@@ -22,7 +22,7 @@ interface Project {
 const dictionaries = {
   pt: {
     heroTitle: "Leandro Lima",
-    heroSubtitle: "Desenvolvedor de Software",
+    heroSubtitle: "Desenvolvedor Fullstack",
     heroDescription: "Sou um desenvolvedor apaixonado por transformar desafios complexos em produtos digitais elegantes e de alto desempenho. Meu foco vai além de apenas escrever código: trabalho lado a lado com você para entender os objetivos do seu negócio e construir soluções sob medida que engajam usuários, escalam com segurança e impulsionam resultados reais. Seja para criar um site institucional de alto impacto, um aplicativo inovador ou uma plataforma corporativa robusta, estou pronto para unir design sofisticado a uma arquitetura tecnológica impecável e tirar a sua visão do papel.",
     linkedinBtn: "Vamos conversar no LinkedIn",
     projectsTitle: "Projetos em Destaque",
@@ -34,7 +34,7 @@ const dictionaries = {
   },
   en: {
     heroTitle: "Leandro Lima",
-    heroSubtitle: "Software Developer",
+    heroSubtitle: "Fullstack Developer",
     heroDescription: "I am a developer passionate about transforming complex challenges into elegant, high-performance digital products. My focus goes beyond merely writing code: I work closely with you to understand your business goals and build custom solutions that engage users, scale securely, and drive tangible results. Whether you need a high-impact institutional website, an innovative mobile app, or a robust corporate platform, I am ready to combine sophisticated design with flawless technical architecture and bring your vision to life.",
     linkedinBtn: "Let's connect on LinkedIn",
     projectsTitle: "Featured Projects",
@@ -123,10 +123,8 @@ export default function Home() {
         <div className="fixed inset-0 w-full h-full animate-metallic -z-20"></div>
         <div className="fixed inset-0 w-full h-full bg-black/40 backdrop-blur-[1px] -z-10"></div>
 
-        {/* Container principal ajustado para padding responsivo */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 md:py-24">
           
-          {/* Navegação responsiva */}
           <nav className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-16 md:mb-24">
             <motion.span 
               initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}
@@ -176,20 +174,23 @@ export default function Home() {
                   <span className="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-zinc-300 font-bold">{t.heroSubtitle}</span>
                 </motion.div>
                 
-                {/* Título responsivo */}
-                <motion.h1 variants={itemVariants} className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight text-white mb-6">
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-300 to-zinc-500">
+                {/* TÍTULO CORRIGIDO: 
+                    - No mobile: text-5xl (maior), font-bold, tracking-tighter e leading tight.
+                    - No desktop: text-6xl até text-7xl, mantendo o equilíbrio. */}
+                <motion.h1 
+                  variants={itemVariants} 
+                  className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter text-white mb-6 leading-[1.1] sm:leading-tight"
+                >
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-200 to-zinc-500">
                     {t.heroTitle}
                   </span>
                 </motion.h1>
                 
-                {/* Descrição responsiva */}
                 <motion.p variants={itemVariants} className="text-base sm:text-lg text-zinc-400 max-w-xl leading-relaxed font-light mb-8 md:mb-10">
                   {t.heroDescription}
                 </motion.p>
                 
                 <motion.div variants={itemVariants}>
-                  {/* Botão responsivo: w-full no mobile, w-auto no desktop */}
                   <Button 
                     asChild 
                     className="w-full sm:w-auto flex justify-center bg-zinc-200 text-zinc-950 hover:bg-zinc-900 hover:text-white border border-transparent hover:border-zinc-500 font-bold rounded-full px-6 md:px-8 h-12 transition-all duration-300 hover:scale-105 active:scale-95 group shadow-lg"
@@ -207,7 +208,6 @@ export default function Home() {
                     <span className="h-[1px] flex-grow bg-gradient-to-r from-zinc-700 to-transparent"></span>
                   </p>
                   
-                  {/* Grid de tecnologias ajustado para mobile */}
                   <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">
                     {["Next.js", "React", "TypeScript", "Tailwind CSS"].map((tech) => (
                       <motion.div 
@@ -281,7 +281,6 @@ export default function Home() {
                             {language === "pt" ? project.description_pt : project.description_en}
                           </p>
                           
-                          {/* Links com flex-wrap para evitar quebra de layout em celulares estreitos */}
                           <div className="flex flex-wrap gap-4 sm:gap-6 mt-auto relative z-20">
                             <Link href={project.github_url} target="_blank" className="flex items-center text-[10px] uppercase tracking-widest text-zinc-500 hover:text-white transition-colors font-bold group/link relative">
                               <GithubIcon className="w-3.5 h-3.5 mr-1.5 sm:mr-2 group-hover/link:text-white transition-colors" />
