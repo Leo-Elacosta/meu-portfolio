@@ -14,7 +14,7 @@ interface Project {
   title_pt: string;
   description_en: string;
   description_pt: string;
-  image_url: string;
+  image_urls: string[];
   github_url: string;
   live_url: string;
 }
@@ -29,7 +29,7 @@ const dictionaries = {
     githubBtn: "Código Fonte",
     liveBtn: "Visualizar Projeto",
     empty: "Nenhum projeto encontrado.",
-    switchLang: "English",
+    switchLang: "Português",
     techTitle: "Tecnologias & Ferramentas",
   },
   en: {
@@ -41,7 +41,7 @@ const dictionaries = {
     githubBtn: "Source Code",
     liveBtn: "Live Demo",
     empty: "No projects found.",
-    switchLang: "Português",
+    switchLang: "English",
     techTitle: "Tech Stack & Tools",
   },
 };
@@ -254,11 +254,17 @@ export default function Home() {
                       <motion.div 
                         key={project.id} 
                         variants={itemVariants} 
-                        className="flex flex-col group p-5 rounded-3xl bg-zinc-950/40 border border-zinc-700/50 backdrop-blur-md hover:bg-zinc-900/60 hover:border-zinc-500/50 transition-all duration-500 shadow-lg hover:shadow-2xl hover:shadow-black/50"
+                        // ADICIONADO: 'relative' para o container prender o link expandido
+                        className="relative flex flex-col group p-5 rounded-3xl bg-zinc-950/40 border border-zinc-700/50 backdrop-blur-md hover:bg-zinc-900/60 hover:border-zinc-500/50 transition-all duration-500 shadow-lg hover:shadow-2xl hover:shadow-black/50 cursor-pointer"
                       >
+                        {/* NOVO: Link invisível que cobre o card inteiro */}
+                        <Link href={`/projects/${project.id}`} className="absolute inset-0 z-10">
+                          <span className="sr-only">Ver detalhes do projeto {project.title_pt}</span>
+                        </Link>
+
                         <div className="relative aspect-[4/3] bg-zinc-800 rounded-2xl overflow-hidden mb-6 shadow-md border border-zinc-800/50">
                           <img
-                            src={project.image_url}
+                            src={project.image_urls?.[0] || "/placeholder.jpg"}
                             alt={project.title_pt}
                             className="object-cover w-full h-full opacity-80 transition-all duration-700 group-hover:opacity-100 group-hover:scale-105"
                           />
@@ -273,13 +279,14 @@ export default function Home() {
                             {language === "pt" ? project.description_pt : project.description_en}
                           </p>
                           
-                          <div className="flex gap-6 mt-auto">
-                            <Link href={project.github_url} target="_blank" className="flex items-center text-[10px] uppercase tracking-widest text-zinc-500 hover:text-white transition-colors font-bold group/link">
+                          {/* ADICIONADO: 'relative z-20' para que estes links fiquem ACIMA do link invisível do card */}
+                          <div className="flex gap-6 mt-auto relative z-20">
+                            <Link href={project.github_url} target="_blank" className="flex items-center text-[10px] uppercase tracking-widest text-zinc-500 hover:text-white transition-colors font-bold group/link relative">
                               <GithubIcon className="w-3.5 h-3.5 mr-2 group-hover/link:text-white transition-colors" />
                               {t.githubBtn}
                             </Link>
                             {project.live_url && (
-                              <Link href={project.live_url} target="_blank" className="flex items-center text-[10px] uppercase tracking-widest text-zinc-500 hover:text-white transition-colors font-bold group/link">
+                              <Link href={project.live_url} target="_blank" className="flex items-center text-[10px] uppercase tracking-widest text-zinc-500 hover:text-white transition-colors font-bold group/link relative">
                                 <ArrowUpRight className="w-3.5 h-3.5 mr-1 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 transition-transform" />
                                 {t.liveBtn}
                               </Link>
