@@ -105,7 +105,6 @@ export default function Home() {
 
   return (
     <>
-      {/* CSS embutido para o efeito metálico animado */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes metallic-pan {
           0% { background-position: 0% 50%; }
@@ -121,13 +120,14 @@ export default function Home() {
 
       <main className="min-h-screen text-zinc-200 antialiased selection:bg-zinc-700 selection:text-white relative z-0">
         
-        {/* Camadas do Background Metálico */}
         <div className="fixed inset-0 w-full h-full animate-metallic -z-20"></div>
         <div className="fixed inset-0 w-full h-full bg-black/40 backdrop-blur-[1px] -z-10"></div>
 
-        <div className="max-w-4xl mx-auto px-6 py-12 md:py-24">
+        {/* Container principal ajustado para padding responsivo */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 md:py-24">
           
-          <nav className="flex justify-between items-center mb-24">
+          {/* Navegação responsiva */}
+          <nav className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-16 md:mb-24">
             <motion.span 
               initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}
               className="text-xs tracking-[0.3em] uppercase font-bold text-zinc-400 flex items-center gap-2"
@@ -137,7 +137,7 @@ export default function Home() {
             
             <motion.div 
               initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}
-              className="flex gap-4 items-center"
+              className="flex gap-4 items-center w-full sm:w-auto justify-between sm:justify-end"
             >
               <Button 
                 variant="ghost" 
@@ -170,26 +170,29 @@ export default function Home() {
               exit="exit"
             >
               
-              <header className="mb-32">
-                <motion.div variants={itemVariants} className="inline-flex items-center mb-6 px-3 py-1 border border-zinc-700/50 bg-zinc-900/40 backdrop-blur-md rounded-full shadow-lg">
+              <header className="mb-24 md:mb-32">
+                <motion.div variants={itemVariants} className="inline-flex items-center mb-6 px-3 py-1.5 border border-zinc-700/50 bg-zinc-900/40 backdrop-blur-md rounded-full shadow-lg">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span>
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-300 font-bold">{t.heroSubtitle}</span>
+                  <span className="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-zinc-300 font-bold">{t.heroSubtitle}</span>
                 </motion.div>
                 
-                <motion.h1 variants={itemVariants} className="text-5xl md:text-6xl font-light tracking-tight text-white mb-6">
+                {/* Título responsivo */}
+                <motion.h1 variants={itemVariants} className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight text-white mb-6">
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-300 to-zinc-500">
                     {t.heroTitle}
                   </span>
                 </motion.h1>
                 
-                <motion.p variants={itemVariants} className="text-lg text-zinc-400 max-w-xl leading-relaxed font-light mb-10">
+                {/* Descrição responsiva */}
+                <motion.p variants={itemVariants} className="text-base sm:text-lg text-zinc-400 max-w-xl leading-relaxed font-light mb-8 md:mb-10">
                   {t.heroDescription}
                 </motion.p>
                 
                 <motion.div variants={itemVariants}>
+                  {/* Botão responsivo: w-full no mobile, w-auto no desktop */}
                   <Button 
                     asChild 
-                    className="bg-zinc-200 text-zinc-950 hover:bg-zinc-900 hover:text-white border border-transparent hover:border-zinc-500 font-bold rounded-full px-6 h-12 transition-all duration-300 hover:scale-105 active:scale-95 group shadow-lg"
+                    className="w-full sm:w-auto flex justify-center bg-zinc-200 text-zinc-950 hover:bg-zinc-900 hover:text-white border border-transparent hover:border-zinc-500 font-bold rounded-full px-6 md:px-8 h-12 transition-all duration-300 hover:scale-105 active:scale-95 group shadow-lg"
                   >
                     <Link href="https://www.linkedin.com/in/leandrolimaandrade/" target="_blank">
                       <LinkedinIcon className="w-4 h-4 mr-2 text-zinc-950 group-hover:text-white transition-colors duration-300" />
@@ -198,19 +201,20 @@ export default function Home() {
                   </Button>
                 </motion.div>
 
-                <motion.div variants={itemVariants} className="mt-24">
-                  <p className="text-[11px] uppercase tracking-[0.3em] text-zinc-500 font-bold mb-8 flex items-center gap-4">
+                <motion.div variants={itemVariants} className="mt-16 md:mt-24">
+                  <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.3em] text-zinc-500 font-bold mb-6 md:mb-8 flex items-center gap-4">
                     {t.techTitle}
                     <span className="h-[1px] flex-grow bg-gradient-to-r from-zinc-700 to-transparent"></span>
                   </p>
                   
-                  <div className="flex flex-wrap gap-3 md:gap-4">
+                  {/* Grid de tecnologias ajustado para mobile */}
+                  <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">
                     {["Next.js", "React", "TypeScript", "Tailwind CSS"].map((tech) => (
                       <motion.div 
                         key={tech} 
                         whileHover={{ scale: 1.05, y: -2 }}
                         whileTap={{ scale: 0.95 }}
-                        className="px-5 py-2.5 rounded-xl border border-zinc-600/50 bg-zinc-800/40 backdrop-blur-md text-zinc-100 text-sm font-semibold tracking-wide hover:bg-zinc-700/60 hover:border-zinc-400 transition-colors shadow-lg cursor-default flex items-center justify-center"
+                        className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl border border-zinc-600/50 bg-zinc-800/40 backdrop-blur-md text-zinc-100 text-xs sm:text-sm font-semibold tracking-wide hover:bg-zinc-700/60 hover:border-zinc-400 transition-colors shadow-lg cursor-default flex items-center justify-center flex-grow sm:flex-grow-0"
                       >
                         {tech}
                       </motion.div>
@@ -220,7 +224,7 @@ export default function Home() {
                         key={tech} 
                         whileHover={{ scale: 1.05, y: -2 }}
                         whileTap={{ scale: 0.95 }}
-                        className="px-5 py-2.5 rounded-xl border border-zinc-800/60 bg-zinc-950/50 backdrop-blur-md text-zinc-400 text-sm font-medium tracking-wide hover:text-zinc-200 hover:border-zinc-600 hover:bg-zinc-900/60 transition-colors shadow-md cursor-default flex items-center justify-center"
+                        className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl border border-zinc-800/60 bg-zinc-950/50 backdrop-blur-md text-zinc-400 text-xs sm:text-sm font-medium tracking-wide hover:text-zinc-200 hover:border-zinc-600 hover:bg-zinc-900/60 transition-colors shadow-md cursor-default flex items-center justify-center flex-grow sm:flex-grow-0"
                       >
                         {tech}
                       </motion.div>
@@ -230,15 +234,15 @@ export default function Home() {
               </header>
 
               <section>
-                <motion.h2 variants={itemVariants} className="text-xs uppercase tracking-[0.3em] text-zinc-400 mb-12 flex items-center gap-6 font-bold">
+                <motion.h2 variants={itemVariants} className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-zinc-400 mb-8 md:mb-12 flex items-center gap-4 sm:gap-6 font-bold">
                   {t.projectsTitle}
                   <span className="h-[1px] flex-grow bg-gradient-to-r from-zinc-700 to-transparent"></span>
                 </motion.h2>
 
                 {loading ? (
-                  <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                     {[1, 2].map((i) => (
-                      <div key={i} className="flex flex-col p-5 rounded-3xl bg-zinc-950/40 border border-zinc-700/50 backdrop-blur-md">
+                      <div key={i} className="flex flex-col p-4 sm:p-5 rounded-3xl bg-zinc-950/40 border border-zinc-700/50 backdrop-blur-md">
                         <Skeleton className="aspect-[4/3] w-full rounded-2xl bg-zinc-800/50 mb-6" />
                         <Skeleton className="h-6 w-3/4 bg-zinc-800/50 mb-3" />
                         <Skeleton className="h-4 w-full bg-zinc-800/50 mb-2" />
@@ -249,20 +253,18 @@ export default function Home() {
                 ) : projects.length === 0 ? (
                   <motion.p variants={itemVariants} className="text-zinc-500 font-light italic">{t.empty}</motion.p>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                     {projects.map((project) => (
                       <motion.div 
                         key={project.id} 
                         variants={itemVariants} 
-                        // ADICIONADO: 'relative' para o container prender o link expandido
-                        className="relative flex flex-col group p-5 rounded-3xl bg-zinc-950/40 border border-zinc-700/50 backdrop-blur-md hover:bg-zinc-900/60 hover:border-zinc-500/50 transition-all duration-500 shadow-lg hover:shadow-2xl hover:shadow-black/50 cursor-pointer"
+                        className="relative flex flex-col group p-4 sm:p-5 rounded-3xl bg-zinc-950/40 border border-zinc-700/50 backdrop-blur-md hover:bg-zinc-900/60 hover:border-zinc-500/50 transition-all duration-500 shadow-lg hover:shadow-2xl hover:shadow-black/50 cursor-pointer"
                       >
-                        {/* NOVO: Link invisível que cobre o card inteiro */}
                         <Link href={`/projects/${project.id}`} className="absolute inset-0 z-10">
                           <span className="sr-only">Ver detalhes do projeto {project.title_pt}</span>
                         </Link>
 
-                        <div className="relative aspect-[4/3] bg-zinc-800 rounded-2xl overflow-hidden mb-6 shadow-md border border-zinc-800/50">
+                        <div className="relative aspect-[4/3] bg-zinc-800 rounded-2xl overflow-hidden mb-5 sm:mb-6 shadow-md border border-zinc-800/50">
                           <img
                             src={project.image_urls?.[0] || "/placeholder.jpg"}
                             alt={project.title_pt}
@@ -272,17 +274,17 @@ export default function Home() {
                         </div>
 
                         <div className="px-1 flex flex-col flex-grow">
-                          <h3 className="text-zinc-100 text-xl font-bold mb-3 transition-colors group-hover:text-white">
+                          <h3 className="text-zinc-100 text-lg sm:text-xl font-bold mb-2 sm:mb-3 transition-colors group-hover:text-white">
                             {language === "pt" ? project.title_pt : project.title_en}
                           </h3>
-                          <p className="text-zinc-400 text-sm font-light leading-relaxed mb-6 line-clamp-3 flex-grow group-hover:text-zinc-300 transition-colors">
+                          <p className="text-zinc-400 text-xs sm:text-sm font-light leading-relaxed mb-5 sm:mb-6 line-clamp-3 flex-grow group-hover:text-zinc-300 transition-colors">
                             {language === "pt" ? project.description_pt : project.description_en}
                           </p>
                           
-                          {/* ADICIONADO: 'relative z-20' para que estes links fiquem ACIMA do link invisível do card */}
-                          <div className="flex gap-6 mt-auto relative z-20">
+                          {/* Links com flex-wrap para evitar quebra de layout em celulares estreitos */}
+                          <div className="flex flex-wrap gap-4 sm:gap-6 mt-auto relative z-20">
                             <Link href={project.github_url} target="_blank" className="flex items-center text-[10px] uppercase tracking-widest text-zinc-500 hover:text-white transition-colors font-bold group/link relative">
-                              <GithubIcon className="w-3.5 h-3.5 mr-2 group-hover/link:text-white transition-colors" />
+                              <GithubIcon className="w-3.5 h-3.5 mr-1.5 sm:mr-2 group-hover/link:text-white transition-colors" />
                               {t.githubBtn}
                             </Link>
                             {project.live_url && (
@@ -299,8 +301,8 @@ export default function Home() {
                 )}
               </section>
 
-              <motion.footer variants={itemVariants} className="mt-40 mb-10 text-center">
-                <p className="text-[11px] uppercase tracking-[0.5em] text-zinc-500 font-bold">
+              <motion.footer variants={itemVariants} className="mt-24 md:mt-40 mb-8 md:mb-10 text-center">
+                <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.5em] text-zinc-500 font-bold">
                   L. Lima &bull; {new Date().getFullYear()}
                 </p>
               </motion.footer>
