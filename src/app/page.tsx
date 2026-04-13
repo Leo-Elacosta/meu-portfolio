@@ -30,7 +30,7 @@ const dictionaries = {
     githubBtn: "Código Fonte",
     liveBtn: "Visualizar Projeto",
     empty: "Nenhum projeto encontrado.",
-    switchLang: "English",
+    switchLang: "To English",
     techTitle: "Tecnologias & Ferramentas",
   },
   en: {
@@ -42,7 +42,7 @@ const dictionaries = {
     githubBtn: "Source Code",
     liveBtn: "Live Demo",
     empty: "No projects found.",
-    switchLang: "Português",
+    switchLang: "Para Português",
     techTitle: "Tech Stack & Tools",
   },
 };
