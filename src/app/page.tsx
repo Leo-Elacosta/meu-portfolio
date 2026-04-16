@@ -48,7 +48,6 @@ const dictionaries = {
   },
 };
 
-// === DADOS DAS TECNOLOGIAS E SUAS VANTAGENS ===
 const techData = {
   frontend: [
     { name: "Next.js", pt: "Renderização híbrida, velocidade e SEO otimizado.", en: "Hybrid rendering, speed, and optimized SEO." },
@@ -64,7 +63,6 @@ const techData = {
   ]
 };
 
-// === ÍCONES ===
 const GithubIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
     <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3-.3 6-1.5 6-6.5a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 5 3 6.2 6 6.5a4.8 4.8 0 0 0-1 3.2v4" />
@@ -79,42 +77,25 @@ const LinkedinIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-// === COMPONENTE: TAG DE TECNOLOGIA COM TOOLTIP ===
 function TechTag({ name, description, variant }: { name: string, description: string, variant: "light" | "dark" }) {
   const [isHovered, setIsHovered] = useState(false);
 
-  // Animação do balãozinho (Tooltip)
   const tooltipSpring = useSpring({
     opacity: isHovered ? 1 : 0,
     transform: isHovered ? "translate(-50%, 0px) scale(1)" : "translate(-50%, 10px) scale(0.8)",
     config: { tension: 350, friction: 20 }
   });
 
-  // Estilos baseados no design original que você criou
   const baseStyle = variant === "light" 
     ? "border-zinc-600/50 bg-zinc-800/40 text-zinc-100 hover:bg-zinc-700/60 hover:border-zinc-400" 
     : "border-zinc-800/60 bg-zinc-950/50 text-zinc-400 hover:text-zinc-200 hover:border-zinc-600 hover:bg-zinc-900/60";
 
   return (
-    <div 
-      className="relative flex flex-grow sm:flex-grow-0"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {/* Tooltip (Card que aparece no hover) */}
-      {/* Usamos pointer-events-none para o mouse não bugar se encostar no próprio card */}
-      <animated.div 
-        style={tooltipSpring} 
-        className="absolute bottom-[115%] left-1/2 w-48 p-3 rounded-xl bg-zinc-900/95 border border-zinc-700 backdrop-blur-xl shadow-2xl z-50 pointer-events-none origin-bottom"
-      >
-        {/* Setinha apontando para baixo */}
+    <div className="relative flex flex-grow sm:flex-grow-0" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+      <animated.div style={tooltipSpring} className="absolute bottom-[115%] left-1/2 w-48 p-3 rounded-xl bg-zinc-900/95 border border-zinc-700 backdrop-blur-xl shadow-2xl z-50 pointer-events-none origin-bottom">
         <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-zinc-900/95 border-b border-r border-zinc-700 rotate-45"></div>
-        <p className="text-xs text-zinc-300 text-center font-medium leading-relaxed relative z-10">
-          {description}
-        </p>
+        <p className="text-xs text-zinc-300 text-center font-medium leading-relaxed relative z-10">{description}</p>
       </animated.div>
-
-      {/* Botão da Tecnologia */}
       <div className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl border backdrop-blur-md text-xs sm:text-sm font-semibold tracking-wide transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg cursor-default flex items-center justify-center w-full ${baseStyle}`}>
         {name}
       </div>
@@ -122,7 +103,6 @@ function TechTag({ name, description, variant }: { name: string, description: st
   );
 }
 
-// === COMPONENTE: SEÇÃO ANIMADA DIRECIONAL ===
 function AnimatedSection({ children, direction, delay = 0, className = "" }: { children: React.ReactNode, direction: "left" | "right", delay?: number, className?: string }) {
   const [ref, springs] = useInView(
     () => ({
@@ -189,7 +169,6 @@ export default function Home() {
       `}} />
 
       <main className="min-h-screen text-zinc-200 antialiased selection:bg-zinc-700 selection:text-white relative z-0">
-        
         <div className="fixed inset-0 w-full h-full animate-metallic -z-20"></div>
         <div className="fixed inset-0 w-full h-full bg-black/40 backdrop-blur-[1px] -z-10"></div>
 
@@ -199,7 +178,6 @@ export default function Home() {
             <span className="text-xs tracking-[0.3em] uppercase font-bold text-zinc-400 flex items-center gap-2">
               <Code2 className="w-4 h-4" /> Portfolio / {new Date().getFullYear()}
             </span>
-            
             <div className="flex gap-4 items-center w-full sm:w-auto justify-between sm:justify-end">
               <Button variant="ghost" size="sm" className="text-zinc-300 hover:bg-zinc-800/60 hover:text-white transition-colors duration-300 text-xs uppercase tracking-widest font-bold backdrop-blur-sm" asChild>
                 <Link href="/admin"><Settings className="w-3.5 h-3.5 mr-2" /> Admin</Link>
@@ -249,42 +227,27 @@ export default function Home() {
                     </Button>
                   </div>
 
-                  {/* SUBSEÇÃO DAS TECNOLOGIAS COM OS NOVOS CARDS */}
                   <div>
                     <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.3em] text-zinc-500 font-bold mb-6 md:mb-8 flex items-center gap-4">
                       {t.techTitle}
                       <span className="h-[1px] flex-grow bg-gradient-to-r from-zinc-700 to-transparent"></span>
                     </p>
-                    
                     <div className="flex flex-col gap-3 sm:gap-4">
-                      {/* Grupo Frontend */}
                       <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">
                         {techData.frontend.map((tech) => (
-                          <TechTag 
-                            key={tech.name} 
-                            name={tech.name} 
-                            description={item === "pt" ? tech.pt : tech.en} 
-                            variant="light" 
-                          />
+                          <TechTag key={tech.name} name={tech.name} description={item === "pt" ? tech.pt : tech.en} variant="light" />
                         ))}
                       </div>
-                      
-                      {/* Grupo Backend */}
                       <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">
                         {techData.backend.map((tech) => (
-                          <TechTag 
-                            key={tech.name} 
-                            name={tech.name} 
-                            description={item === "pt" ? tech.pt : tech.en} 
-                            variant="dark" 
-                          />
+                          <TechTag key={tech.name} name={tech.name} description={item === "pt" ? tech.pt : tech.en} variant="dark" />
                         ))}
                       </div>
                     </div>
                   </div>
                 </AnimatedSection>
 
-                {/* 3. SEÇÃO PROJETOS */}
+                {/* 3. SEÇÃO PROJETOS (ATUALIZADA PARA HORIZONTAL) */}
                 <AnimatedSection direction="left" className="mb-24">
                   <h2 className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-zinc-400 mb-8 md:mb-12 flex items-center gap-4 sm:gap-6 font-bold">
                     {t.projectsTitle}
@@ -292,49 +255,70 @@ export default function Home() {
                   </h2>
 
                   {loading ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                    // Skeleton Horizontal
+                    <div className="flex flex-col gap-6 md:gap-8">
                       {[1, 2].map((i) => (
-                        <div key={i} className="flex flex-col p-4 sm:p-5 rounded-3xl bg-zinc-950/40 border border-zinc-700/50 backdrop-blur-md">
-                          <Skeleton className="aspect-[4/3] w-full rounded-2xl bg-zinc-800/50 mb-6" />
-                          <Skeleton className="h-6 w-3/4 bg-zinc-800/50 mb-3" />
-                          <Skeleton className="h-4 w-full bg-zinc-800/50 mb-2" />
-                          <Skeleton className="h-4 w-5/6 bg-zinc-800/50" />
+                        <div key={i} className="flex flex-col md:flex-row rounded-3xl bg-zinc-950/40 border border-zinc-700/50 backdrop-blur-md overflow-hidden">
+                          <Skeleton className="w-full md:w-[30%] aspect-video md:aspect-auto bg-zinc-800/50" />
+                          <div className="flex-1 p-6 flex flex-col justify-center">
+                            <Skeleton className="h-6 w-1/2 bg-zinc-800/50 mb-3" />
+                            <Skeleton className="h-4 w-full bg-zinc-800/50 mb-2" />
+                            <Skeleton className="h-4 w-5/6 bg-zinc-800/50" />
+                          </div>
                         </div>
                       ))}
                     </div>
                   ) : projects.length === 0 ? (
                     <p className="text-zinc-500 font-light italic">{t.empty}</p>
                   ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                    // Lista de Projetos Horizontal
+                    <div className="flex flex-col gap-6 md:gap-8">
                       {projects.map((project) => (
-                        <div key={project.id} className="relative flex flex-col group p-4 sm:p-5 rounded-3xl bg-zinc-950/40 border border-zinc-700/50 backdrop-blur-md hover:bg-zinc-900/60 hover:border-zinc-500/50 transition-all duration-500 shadow-lg hover:shadow-2xl hover:shadow-black/50 cursor-pointer">
+                        <div 
+                          key={project.id} 
+                          className="relative flex flex-col md:flex-row group rounded-3xl bg-zinc-950/40 border border-zinc-700/50 backdrop-blur-md hover:bg-zinc-900/60 hover:border-zinc-500/50 transition-all duration-500 shadow-lg hover:shadow-2xl hover:shadow-black/50 cursor-pointer overflow-hidden"
+                        >
+                          {/* Link que cobre o card inteiro silenciosamente */}
                           <Link href={`/projects/${project.id}`} className="absolute inset-0 z-10">
                             <span className="sr-only">Ver detalhes do projeto {project.title_pt}</span>
                           </Link>
-                          <div className="relative aspect-[4/3] bg-zinc-800 rounded-2xl overflow-hidden mb-5 sm:mb-6 shadow-md border border-zinc-800/50">
-                            <img src={project.image_urls?.[0] || "/placeholder.jpg"} alt={project.title_pt} className="object-cover w-full h-full opacity-80 transition-all duration-700 group-hover:opacity-100 group-hover:scale-105" />
+
+                          {/* LADO ESQUERDO: Imagem */}
+                          {/* Em telas medias (md), ocupa 30% da largura. */}
+                          <div className="relative w-full md:w-[30%] aspect-video md:aspect-auto overflow-hidden bg-zinc-900 border-b md:border-b-0 md:border-r border-zinc-800/50">
+                            <img 
+                              src={project.image_urls?.[0] || "/placeholder.jpg"} 
+                              alt={project.title_pt} 
+                              // A imagem vai de 80% de opacidade para 100%, e a escala cresce levemente (scale-110)
+                              className="object-cover w-full h-full opacity-80 transition-all duration-700 group-hover:opacity-100 group-hover:scale-110" 
+                            />
                             <div className="absolute inset-0 bg-zinc-950/20 group-hover:bg-transparent transition-colors duration-500"></div>
                           </div>
-                          <div className="px-1 flex flex-col flex-grow">
-                            <h3 className="text-zinc-100 text-lg sm:text-xl font-bold mb-2 sm:mb-3 transition-colors group-hover:text-white">
+
+                          {/* LADO DIREITO: Textos e Botões */}
+                          <div className="flex-1 p-6 md:p-8 flex flex-col justify-center">
+                            <h3 className="text-zinc-100 text-xl md:text-2xl font-bold mb-3 transition-colors group-hover:text-white">
                               {item === "pt" ? project.title_pt : project.title_en}
                             </h3>
-                            <p className="text-zinc-400 text-xs sm:text-sm font-light leading-relaxed mb-5 sm:mb-6 line-clamp-3 flex-grow group-hover:text-zinc-300 transition-colors">
+                            <p className="text-zinc-400 text-sm md:text-base font-light leading-relaxed mb-6 md:mb-8 line-clamp-3 group-hover:text-zinc-300 transition-colors">
                               {item === "pt" ? project.description_pt : project.description_en}
                             </p>
+                            
+                            {/* Botões - Precisam de z-20 para ficar "acima" do link principal invisível */}
                             <div className="flex flex-wrap gap-4 sm:gap-6 mt-auto relative z-20">
-                              <Link href={project.github_url} target="_blank" className="flex items-center text-[10px] uppercase tracking-widest text-zinc-500 hover:text-white transition-colors font-bold group/link relative z-20">
-                                <GithubIcon className="w-3.5 h-3.5 mr-1.5 sm:mr-2 group-hover/link:text-white transition-colors" />
+                              <Link href={project.github_url} target="_blank" className="flex items-center text-[10px] sm:text-xs uppercase tracking-widest text-zinc-500 hover:text-white transition-colors font-bold group/link">
+                                <GithubIcon className="w-4 h-4 mr-1.5 sm:mr-2 group-hover/link:text-white transition-colors" />
                                 {t.githubBtn}
                               </Link>
                               {project.live_url && (
-                                <Link href={project.live_url} target="_blank" className="flex items-center text-[10px] uppercase tracking-widest text-zinc-500 hover:text-white transition-colors font-bold group/link relative z-20">
-                                  <ArrowUpRight className="w-3.5 h-3.5 mr-1 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 transition-transform" />
+                                <Link href={project.live_url} target="_blank" className="flex items-center text-[10px] sm:text-xs uppercase tracking-widest text-zinc-500 hover:text-white transition-colors font-bold group/link">
+                                  <ArrowUpRight className="w-4 h-4 mr-1 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 transition-transform" />
                                   {t.liveBtn}
                                 </Link>
                               )}
                             </div>
                           </div>
+
                         </div>
                       ))}
                     </div>
