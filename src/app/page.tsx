@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 import { useTransition, useSpring, useInView, animated } from "@react-spring/web";
-import { ArrowUpRight, Settings, Globe, Code2 } from "lucide-react";
+// NOVO: Adicionamos o MapPin aqui nas importações do lucide-react
+import { ArrowUpRight, Settings, Globe, Code2, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -25,6 +26,12 @@ const dictionaries = {
     heroSubtitle: "Desenvolvedor Fullstack",
     aboutTitle: "Sobre mim",
     heroDescription: "Sou um desenvolvedor apaixonado por transformar desafios complexos em produtos digitais elegantes e de alto desempenho. Meu foco vai além de apenas escrever código: trabalho lado a lado com você para entender os objetivos do seu negócio e construir soluções sob medida que engajam usuários, escalam com segurança e impulsionam resultados reais. Seja para criar um site institucional de alto impacto, um aplicativo inovador ou uma plataforma corporativa robusta, estou pronto para unir design sofisticado a uma arquitetura tecnológica impecável e tirar a sua visão do papel.",
+    // NOVO: Traduções dos modelos de atuação
+    workTitle: "Modelos de Atuação",
+    workLocal: "Presencial & Híbrido",
+    workLocalDesc: "Região Metropolitana de Porto Alegre/RS",
+    workRemote: "Remoto",
+    workRemoteDesc: "Globalmente",
     linkedinBtn: "Vamos conversar no LinkedIn",
     projectsTitle: "Projetos em Destaque",
     githubBtn: "Código Fonte",
@@ -38,6 +45,12 @@ const dictionaries = {
     heroSubtitle: "Fullstack Developer",
     aboutTitle: "About Me",
     heroDescription: "I am a developer passionate about transforming complex challenges into elegant, high-performance digital products. My focus goes beyond merely writing code: I work closely with you to understand your business goals and build custom solutions that engage users, scale securely, and drive tangible results. Whether you need a high-impact institutional website, an innovative mobile app, or a robust corporate platform, I am ready to combine sophisticated design with flawless technical architecture and bring your vision to life.",
+    // NOVO: Traduções dos modelos de atuação em inglês
+    workTitle: "Work Models",
+    workLocal: "On-site & Hybrid",
+    workLocalDesc: "Porto Alegre Metro Area, RS, Brazil",
+    workRemote: "Remote",
+    workRemoteDesc: "Worldwide",
     linkedinBtn: "Let's connect on LinkedIn",
     projectsTitle: "Featured Projects",
     githubBtn: "Source Code",
@@ -201,8 +214,9 @@ export default function Home() {
                     <span className="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span>
                     <span className="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-zinc-300 font-bold">{t.heroSubtitle}</span>
                   </div>
-                  <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter text-white leading-[1.1] sm:leading-tight">
-                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-200 to-zinc-500">
+                  <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter leading-[1.1] sm:leading-tight">
+                    {/* NOVO: Aqui está a correção do celular! Branco sólido no mobile, gradiente em telas maiores (sm:) */}
+                    <span className="text-white sm:bg-clip-text sm:text-transparent sm:bg-gradient-to-r sm:from-white sm:via-zinc-200 sm:to-zinc-500">
                       {t.heroTitle}
                     </span>
                   </h1>
@@ -214,10 +228,42 @@ export default function Home() {
                     {t.aboutTitle}
                     <span className="h-[1px] w-12 bg-gradient-to-r from-zinc-700 to-transparent block sm:hidden"></span>
                   </h2>
-                  <p className="text-base sm:text-lg text-zinc-400 max-w-xl leading-relaxed font-light mb-8 md:mb-10">
+                  <p className="text-base sm:text-lg text-zinc-400 max-w-xl leading-relaxed font-light mb-10">
                     {t.heroDescription}
                   </p>
+
+                  {/* NOVO: SEÇÃO DE MODELOS DE ATUAÇÃO */}
+                  <div className="mb-10">
+                    <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.3em] text-zinc-500 font-bold mb-4 flex items-center gap-4">
+                      {t.workTitle}
+                      <span className="h-[1px] flex-grow bg-gradient-to-r from-zinc-700 to-transparent"></span>
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      {/* Card Presencial / Híbrido */}
+                      <div className="flex items-center gap-4 px-5 py-4 rounded-2xl border border-zinc-800/60 bg-zinc-900/40 backdrop-blur-md flex-1">
+                        <div className="p-2 bg-emerald-500/10 rounded-full border border-emerald-500/20">
+                          <MapPin className="w-5 h-5 text-emerald-400" />
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-sm font-bold text-zinc-200 leading-tight mb-1">{t.workLocal}</span>
+                          <span className="text-xs text-zinc-400">{t.workLocalDesc}</span>
+                        </div>
+                      </div>
+                      
+                      {/* Card Remoto */}
+                      <div className="flex items-center gap-4 px-5 py-4 rounded-2xl border border-zinc-800/60 bg-zinc-900/40 backdrop-blur-md flex-1">
+                        <div className="p-2 bg-blue-500/10 rounded-full border border-blue-500/20">
+                          <Globe className="w-5 h-5 text-blue-400" />
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-sm font-bold text-zinc-200 leading-tight mb-1">{t.workRemote}</span>
+                          <span className="text-xs text-zinc-400">{t.workRemoteDesc}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   
+                  {/* Botão LinkedIn */}
                   <div className="mb-12">
                     <Button asChild className="w-full sm:w-auto flex justify-center bg-zinc-200 text-zinc-950 hover:bg-zinc-900 hover:text-white border border-transparent hover:border-zinc-500 font-bold rounded-full px-6 md:px-8 h-12 transition-all duration-300 hover:scale-105 active:scale-95 group shadow-lg">
                       <Link href="https://www.linkedin.com/in/leandrolimaandrade/" target="_blank">
@@ -255,7 +301,6 @@ export default function Home() {
                   </h2>
 
                   {loading ? (
-                    // Skeleton Horizontal
                     <div className="flex flex-col gap-6 md:gap-8">
                       {[1, 2].map((i) => (
                         <div key={i} className="flex flex-col md:flex-row rounded-3xl bg-zinc-950/40 border border-zinc-700/50 backdrop-blur-md overflow-hidden">
@@ -271,31 +316,25 @@ export default function Home() {
                   ) : projects.length === 0 ? (
                     <p className="text-zinc-500 font-light italic">{t.empty}</p>
                   ) : (
-                    // Lista de Projetos Horizontal
                     <div className="flex flex-col gap-6 md:gap-8">
                       {projects.map((project) => (
                         <div 
                           key={project.id} 
                           className="relative flex flex-col md:flex-row group rounded-3xl bg-zinc-950/40 border border-zinc-700/50 backdrop-blur-md hover:bg-zinc-900/60 hover:border-zinc-500/50 transition-all duration-500 shadow-lg hover:shadow-2xl hover:shadow-black/50 cursor-pointer overflow-hidden"
                         >
-                          {/* Link que cobre o card inteiro silenciosamente */}
                           <Link href={`/projects/${project.id}`} className="absolute inset-0 z-10">
                             <span className="sr-only">Ver detalhes do projeto {project.title_pt}</span>
                           </Link>
 
-                          {/* LADO ESQUERDO: Imagem */}
-                          {/* Em telas medias (md), ocupa 30% da largura. */}
                           <div className="relative w-full md:w-[30%] aspect-video md:aspect-auto overflow-hidden bg-zinc-900 border-b md:border-b-0 md:border-r border-zinc-800/50">
                             <img 
                               src={project.image_urls?.[0] || "/placeholder.jpg"} 
                               alt={project.title_pt} 
-                              // A imagem vai de 80% de opacidade para 100%, e a escala cresce levemente (scale-110)
                               className="object-cover w-full h-full opacity-80 transition-all duration-700 group-hover:opacity-100 group-hover:scale-110" 
                             />
                             <div className="absolute inset-0 bg-zinc-950/20 group-hover:bg-transparent transition-colors duration-500"></div>
                           </div>
 
-                          {/* LADO DIREITO: Textos e Botões */}
                           <div className="flex-1 p-6 md:p-8 flex flex-col justify-center">
                             <h3 className="text-zinc-100 text-xl md:text-2xl font-bold mb-3 transition-colors group-hover:text-white">
                               {item === "pt" ? project.title_pt : project.title_en}
@@ -304,7 +343,6 @@ export default function Home() {
                               {item === "pt" ? project.description_pt : project.description_en}
                             </p>
                             
-                            {/* Botões - Precisam de z-20 para ficar "acima" do link principal invisível */}
                             <div className="flex flex-wrap gap-4 sm:gap-6 mt-auto relative z-20">
                               <Link href={project.github_url} target="_blank" className="flex items-center text-[10px] sm:text-xs uppercase tracking-widest text-zinc-500 hover:text-white transition-colors font-bold group/link">
                                 <GithubIcon className="w-4 h-4 mr-1.5 sm:mr-2 group-hover/link:text-white transition-colors" />
